@@ -1,10 +1,13 @@
 
 import { Card } from "react-bootstrap";
 import ExpenseItem from "./ExpenseItem";
+import { useSelector } from "react-redux";
+import { selectExpenses } from "../features/expenseSlice";
 
 const ExpenseList = () => {
-  const expenses = [];
-
+  const expenses = useSelector(selectExpenses)  //dynamically accessing array 
+ 
+  
   return (
     <Card className="mb-4">
       <Card.Body>

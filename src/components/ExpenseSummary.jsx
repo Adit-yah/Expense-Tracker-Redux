@@ -1,14 +1,17 @@
 
 import { Card, Row, Col, ProgressBar } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { remaningSalary, selectSalary, totalExpenses } from "../features/expenseSlice";
 
 const ExpenseSummary = () => {
-  const salary = 5000;
-  const totalExpenses = 3000;
-  const remainingBudget = 2000;
-
+  
+  
+  const salary  = useSelector(selectSalary) // dynamic salary through redux 
+  const totalExpense = useSelector(totalExpenses)
+  const remainingBudget = useSelector(remaningSalary);
 
   // Calculate percentage of salary spent
-  const percentageSpent = salary > 0 ? (totalExpenses / salary) * 100 : 0;
+  const percentageSpent = salary > 0 ? (totalExpense / salary) * 100 : 0;
 
   // Determine progress bar variant based on percentage spent
   const getProgressVariant = (percent) => {
@@ -32,7 +35,7 @@ const ExpenseSummary = () => {
           <Col md={4}>
             <div className="text-center">
               <h6>Total Expenses</h6>
-              <h3>₹{totalExpenses.toFixed(2)}</h3>
+              <h3>₹{totalExpense.toFixed(2)}</h3>
             </div>
           </Col>
           <Col md={4}>

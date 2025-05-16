@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { setSalary } from "../features/expenseSlice";
 
 const SalaryInput = () => {
-  const [salary, setSalaryInput] = useState(5000);
+  const [salary, setSalaryInput] = useState('');
+  const dispatch = useDispatch()
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(setSalary(Number(salary)))
   };
 
   return (

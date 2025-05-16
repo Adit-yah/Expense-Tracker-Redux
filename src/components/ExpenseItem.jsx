@@ -1,24 +1,17 @@
 import { useState } from "react";
 import { Button, Card, Form, Row, Col } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteExpense, editExpense, selectCategories } from "../features/expenseSlice";
 
 const ExpenseItem = ({ expense }) => {
-  const categories = [
-    "Food",
-    "Transportation",
-    "Housing",
-    "Entertainment",
-    "Utilities",
-    "Healthcare",
-    "Other",
-  ];
+  const dispatch = useDispatch()
+  const categories = useSelector(selectCategories)
   const [isEditing, setIsEditing] = useState(false);
-  const [editedExpense, setEditedExpense] = useState({
-    ...expense,
-    date: new Date(expense.date).toISOString().split("T")[0],
-  });
-
+  const [editedExpense, setEditedExpense] = useState({...expense, });
+  
   const handleDelete = () => {
-    console.log(expense.id);
+    dispatch(deleteExpense(expense.id))
+    
   };
 
   const handleEdit = () => {
@@ -32,18 +25,18 @@ const ExpenseItem = ({ expense }) => {
 
   const handleSave = () => {
     setIsEditing(false);
+    dispatch(editExpense( editedExpense))
   };
 
   const handleCancel = () => {
     setEditedExpense({
       ...expense,
-      date: new Date(expense.date).toISOString().split("T")[0],
     });
     setIsEditing(false);
   };
 
-  const formattedDate = new Date(expense.date).toLocaleDateString();
-
+  const formattedDate = new Date(expense.date).toLocaleDateString()
+  
   return (
     <Card className="mb-3">
       <Card.Body>
@@ -129,7 +122,7 @@ const ExpenseItem = ({ expense }) => {
                 </div>
               </div>
               <div className="d-flex align-items-center">
-                <h5 className="mb-0 me-3">${expense.amount.toFixed(2)}</h5>
+                <h5 className="mb-0 me-3">₹{expense.amount.toFixed(2)}</h5>
                 <div className="d-flex gap-2">
                   <Button
                     variant="outline-primary"
